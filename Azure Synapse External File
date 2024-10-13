@@ -1,0 +1,35 @@
+ 	CREATE EXTERNAL FILE FORMAT [SynapseParquetFormat] 
+	WITH ( FORMAT_TYPE = PARQUET)
+
+	CREATE EXTERNAL DATA SOURCE [synapse507_synapse507_dfs_core_windows_net] 
+	WITH (
+		LOCATION = 'abfss://synapse507@synapse507.dfs.core.windows.net' 
+	)
+
+CREATE EXTERNAL TABLE dbo.customer (
+	[CustomerID] int,
+	[NameStyle] bit,
+	[Title] nvarchar(4000),
+	[FirstName] nvarchar(4000),
+	[MiddleName] nvarchar(4000),
+	[LastName] nvarchar(4000),
+	[Suffix] nvarchar(4000),
+	[CompanyName] nvarchar(4000),
+	[SalesPerson] nvarchar(4000),
+	[EmailAddress] nvarchar(4000),
+	[Phone] nvarchar(4000),
+	[PasswordHash] nvarchar(4000),
+	[PasswordSalt] nvarchar(4000),
+	[rowguid] nvarchar(4000),
+	[ModifiedDate] datetime2(7)
+	)
+	WITH (
+	LOCATION = 'SalesLT.Customer.parquet',
+	DATA_SOURCE = [synapse507_synapse507_dfs_core_windows_net],
+	FILE_FORMAT = [SynapseParquetFormat]
+	)
+GO
+
+
+SELECT TOP 100 * FROM dbo.customer
+GO
